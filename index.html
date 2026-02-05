@@ -3,245 +3,390 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HonorariosMédicos+ | Gestión Elite para Especialistas</title>
+    <title>Cobromed | Gestión Inteligente de Honorarios Médicos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            cyan: '#00AAE4',
+                            magenta: '#E6007E',
+                            green: '#8CC63F',
+                            dark: '#333333',
+                            blue: '#1E40AF'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
         }
         .glass-nav {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
         .hero-gradient {
-            background: radial-gradient(circle at top right, #f8fafc, #eff6ff);
+            background: radial-gradient(circle at top right, #f0f9ff, #fff);
         }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            transition: all 0.3s ease;
+        /* Efecto de Menú Visual */
+        .visual-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
         }
+        .visual-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .visual-card img {
+            transition: transform 0.6s ease;
+        }
+        .visual-card:hover img {
+            transform: scale(1.05);
+        }
+        .visual-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+        }
+        
         .submenu {
             display: none;
             position: absolute;
             top: 100%;
             left: 0;
             background: white;
-            min-width: 200px;
+            min-width: 220px;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            padding: 10px 0;
+            border-radius: 12px;
+            padding: 8px;
             z-index: 50;
+            border: 1px solid #f1f5f9;
+            margin-top: 10px;
         }
         .nav-item:hover .submenu {
             display: block;
+            animation: fadeIn 0.2s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body class="text-slate-800 bg-white">
 
     <!-- Navegación -->
-    <nav class="fixed w-full z-50 glass-nav">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <!-- Logo -->
-            <div class="flex items-center gap-2">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="40" rx="8" fill="#1e40af"/>
-                    <path d="M12 14H28M12 20H28M12 26H20" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M25 24L28 27L33 21" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span class="text-xl font-bold tracking-tight text-blue-900">Honorarios<span class="text-blue-600">Médicos+</span></span>
-            </div>
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <!-- Logo Cobromed -->
+            <a href="#" class="flex items-center gap-2 group">
+                <!-- Se usa una altura mayor (h-16) para que el logo destaque bien -->
+                <img src="logo cobromed.jpg" alt="Cobromed Logo" class="h-16 w-auto object-contain transition-transform group-hover:scale-105">
+            </a>
 
             <!-- Menú Desktop -->
             <div class="hidden md:flex items-center gap-8">
                 <div class="relative nav-item">
-                    <a href="#inicio" class="text-sm font-medium hover:text-blue-600 transition">Inicio</a>
+                    <a href="#inicio" class="text-sm font-semibold text-slate-600 hover:text-brand-cyan transition">Inicio</a>
                 </div>
-                <div class="relative nav-item">
-                    <a href="#servicios" class="text-sm font-medium hover:text-blue-600 transition flex items-center gap-1">
-                        Servicios <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                
+                <div class="relative nav-item group">
+                    <a href="#visual-menu" class="text-sm font-semibold text-slate-600 hover:text-brand-cyan transition flex items-center gap-1">
+                        Soluciones <i data-lucide="chevron-down" class="w-4 h-4 text-brand-magenta"></i>
                     </a>
-                    <div class="submenu border border-slate-100">
-                        <a href="#gestion" class="block px-4 py-2 text-sm hover:bg-slate-50">Gestión de Cartas</a>
-                        <a href="#auditoria" class="block px-4 py-2 text-sm hover:bg-slate-50">Auditoría Médica</a>
-                        <a href="#conciliacion" class="block px-4 py-2 text-sm hover:bg-slate-50">Conciliación Bancaria</a>
+                    <!-- Submenu mejorado -->
+                    <div class="submenu">
+                        <a href="#datos" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-50 transition group">
+                            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-brand-cyan group-hover:bg-brand-cyan group-hover:text-white transition">
+                                <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-slate-700">Análisis de Datos</p>
+                                <p class="text-xs text-slate-500">Auditoría precisa</p>
+                            </div>
+                        </a>
+                        <a href="#seguridad" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-50 transition group">
+                            <div class="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center text-brand-green group-hover:bg-brand-green group-hover:text-white transition">
+                                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-slate-700">Seguridad</p>
+                                <p class="text-xs text-slate-500">Protección biométrica</p>
+                            </div>
+                        </a>
+                        <a href="#plataforma" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-50 transition group">
+                            <div class="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center text-brand-magenta group-hover:bg-brand-magenta group-hover:text-white transition">
+                                <i data-lucide="layers" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-slate-700">Plataforma</p>
+                                <p class="text-xs text-slate-500">Gestión integral</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
-                <a href="#proceso" class="text-sm font-medium hover:text-blue-600 transition">Metodología</a>
-                <a href="#contacto" class="bg-blue-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-blue-700 transition">Consulta Gratuita</a>
+
+                <a href="#metodologia" class="text-sm font-semibold text-slate-600 hover:text-brand-cyan transition">Metodología</a>
+                
+                <!-- Botón CTA -->
+                <a href="#contacto" class="bg-gradient-to-r from-brand-blue to-brand-cyan text-white px-6 py-3 rounded-full text-sm font-bold hover:shadow-lg hover:shadow-brand-cyan/30 transition transform hover:-translate-y-0.5">
+                    Consulta Gratuita
+                </a>
             </div>
 
             <!-- Mobile Menu Icon -->
             <div class="md:hidden">
-                <i data-lucide="menu" class="w-6 h-6"></i>
+                <i data-lucide="menu" class="w-8 h-8 text-slate-700 cursor-pointer"></i>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="inicio" class="pt-32 pb-20 px-6 hero-gradient">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-blue-600 uppercase bg-blue-50 rounded-full">Gestión Financiera Médica</span>
-                <h1 class="text-5xl md:text-6xl font-bold leading-tight text-slate-900 mb-6">
-                    Usted cuida la salud, nosotros <span class="text-blue-600">sus honorarios.</span>
+    <section id="inicio" class="pt-36 pb-20 px-6 hero-gradient relative overflow-hidden">
+        <!-- Decoración de fondo abstracta usando colores del logo -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-magenta/5 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4"></div>
+
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-100 rounded-full shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-brand-green animate-pulse"></span>
+                    <span class="text-xs font-bold tracking-wider text-slate-600 uppercase">Gestión Elite para Especialistas</span>
+                </div>
+                
+                <h1 class="text-5xl lg:text-7xl font-bold leading-tight text-slate-900">
+                    Tu enfoque es la medicina, <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-blue">el nuestro es tu cobro.</span>
                 </h1>
-                <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg">
-                    Optimizamos el proceso de cobro ante aseguradoras para médicos especialistas. Recuperamos sus pagos pendientes con transparencia, rapidez y rigor legal.
+                
+                <p class="text-lg text-slate-600 leading-relaxed max-w-lg">
+                    Recuperamos honorarios médicos con la precisión de un cirujano. Tecnología de datos, seguridad biométrica y gestión legal en una sola plataforma.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="#servicios" class="flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200">
-                        Empezar ahora <i data-lucide="arrow-right" class="w-5 h-5"></i>
+
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="#visual-menu" class="flex items-center justify-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-800 transition shadow-xl">
+                        Ver Soluciones <i data-lucide="arrow-down" class="w-5 h-5"></i>
                     </a>
-                    <a href="#contacto" class="flex items-center justify-center gap-2 border border-slate-200 text-slate-700 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 transition">
-                        Ver beneficios
+                    <a href="#contacto" class="flex items-center justify-center gap-2 bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 transition">
+                        Hablar con Asesor
                     </a>
                 </div>
-                <div class="mt-12 flex items-center gap-6">
-                    <div class="flex -space-x-3">
-                        <div class="w-10 h-10 rounded-full bg-slate-200 border-2 border-white flex items-center justify-center text-xs font-bold text-slate-500">DR</div>
-                        <div class="w-10 h-10 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center text-xs font-bold text-blue-600">MA</div>
-                        <div class="w-10 h-10 rounded-full bg-slate-200 border-2 border-white flex items-center justify-center text-xs font-bold text-slate-500">LC</div>
+
+                <div class="flex items-center gap-4 pt-4 border-t border-slate-200/60">
+                    <div class="flex -space-x-4">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-12 h-12 rounded-full border-2 border-white" alt="Doctor">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-12 h-12 rounded-full border-2 border-white" alt="Doctora">
+                        <div class="w-12 h-12 rounded-full bg-brand-cyan text-white border-2 border-white flex items-center justify-center font-bold text-xs">+500</div>
                     </div>
-                    <p class="text-sm text-slate-500"><span class="font-bold text-slate-800">+500 Especialistas</span> confían en nosotros</p>
+                    <div>
+                        <div class="flex text-yellow-400 mb-1">
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        </div>
+                        <p class="text-sm font-medium text-slate-600">Médicos afiliados satisfechos</p>
+                    </div>
                 </div>
             </div>
-            <div class="relative">
-                <div class="absolute -inset-4 bg-blue-200/20 rounded-3xl blur-2xl"></div>
-                <div class="relative bg-white p-2 rounded-3xl shadow-2xl overflow-hidden border border-slate-100">
-                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1000&auto=format&fit=crop" 
-                         alt="Médico especialista revisando documentos" 
-                         class="rounded-2xl w-full h-[500px] object-cover"
-                         onerror="this.src='https://via.placeholder.com/1000x800?text=Servicio+Medico+Elite'">
-                    <!-- Overlay stats -->
-                    <div class="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur p-6 rounded-2xl shadow-xl flex justify-around">
-                        <div class="text-center">
-                            <p class="text-2xl font-bold text-blue-900">98%</p>
-                            <p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Efectividad</p>
+
+            <!-- Imagen Principal Hero (Medico con Tablet) -->
+            <div class="relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-brand-cyan via-brand-magenta to-brand-green rounded-[2.5rem] blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
+                <div class="relative bg-white p-2 rounded-[2.5rem] shadow-2xl overflow-hidden">
+                    <img src="medico con tablet.jpg" 
+                         alt="Médico especialista utilizando plataforma Cobromed" 
+                         class="rounded-[2rem] w-full h-[600px] object-cover object-top transform transition duration-700 hover:scale-105">
+                    
+                    <!-- Floating Card -->
+                    <div class="absolute bottom-8 left-8 right-8 bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-slate-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-xs text-slate-500 font-bold uppercase">Estado de Cuenta</p>
+                                <p class="text-2xl font-bold text-brand-dark">$145,200.00</p>
+                            </div>
+                            <div class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                                <i data-lucide="trending-up" class="w-3 h-3"></i> +12%
+                            </div>
                         </div>
-                        <div class="w-px h-10 bg-slate-200"></div>
-                        <div class="text-center">
-                            <p class="text-2xl font-bold text-blue-900">15</p>
-                            <p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Días promedio</p>
+                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                            <div class="bg-brand-cyan h-full rounded-full" style="width: 75%"></div>
                         </div>
-                        <div class="w-px h-10 bg-slate-200"></div>
-                        <div class="text-center">
-                            <p class="text-2xl font-bold text-blue-900">0</p>
-                            <p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Costo Inicial</p>
-                        </div>
+                        <p class="text-xs text-slate-400 mt-2 text-right">Recuperación en tiempo récord</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sección de Servicios -->
-    <section id="servicios" class="py-24 px-6">
+    <!-- NUEVO MENU VISUAL (Proyectando las imágenes adjuntas) -->
+    <section id="visual-menu" class="py-24 px-6 bg-slate-50">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Servicios Especializados</h2>
-                <p class="text-slate-500 max-w-2xl mx-auto italic">Soluciones integrales diseñadas para liberar su carga administrativa.</p>
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Ecosistema Cobromed</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Navegue a través de nuestros pilares de servicio. Seleccione una tarjeta para conocer más.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Servicio 1 -->
-                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 card-hover">
-                    <div class="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center mb-6 text-white">
-                        <i data-lucide="file-check"></i>
+                <!-- Tarjeta 1: Datos -->
+                <!-- Se cambió a DIV y se añadió ID para que el link del menú funcione y no cause error -->
+                <div id="datos" class="group visual-card bg-white rounded-3xl shadow-sm relative h-[400px] cursor-default">
+                    <div class="absolute inset-0">
+                        <img src="datos.jpg" alt="Análisis de datos médicos" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 visual-overlay"></div>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Gestión de Cartas</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Tramitación completa de cartas de honorarios, desde la recepción hasta la liberación efectiva del pago.
-                    </p>
+                    <div class="absolute bottom-0 left-0 p-8 w-full">
+                        <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 text-white border border-white/30">
+                            <i data-lucide="bar-chart-2"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Análisis de Datos</h3>
+                        <p class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                            Detectamos discrepancias en tabuladores al instante usando tecnología avanzada.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Servicio 2 -->
-                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 card-hover">
-                    <div class="w-14 h-14 bg-emerald-500 rounded-2xl flex items-center justify-center mb-6 text-white">
-                        <i data-lucide="search-code"></i>
+                <!-- Tarjeta 2: Seguridad (Dedo) -->
+                <!-- Se cambió a DIV y se añadió ID -->
+                <div id="seguridad" class="group visual-card bg-white rounded-3xl shadow-sm relative h-[400px] cursor-default md:-mt-8">
+                    <div class="absolute inset-0 border-4 border-brand-cyan/20 rounded-3xl z-10 pointer-events-none"></div>
+                    <div class="absolute inset-0">
+                        <img src="seguridad con dedo.jpg" alt="Seguridad biométrica" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 visual-overlay"></div>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Auditoría de Pagos</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Revisión minuciosa de tabuladores aplicados por las aseguradoras para asegurar el pago justo según su contrato.
-                    </p>
+                    <div class="absolute bottom-0 left-0 p-8 w-full z-20">
+                        <div class="w-12 h-12 bg-brand-cyan rounded-xl flex items-center justify-center mb-4 text-white shadow-lg shadow-brand-cyan/40">
+                            <i data-lucide="fingerprint"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Seguridad Total</h3>
+                        <p class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                            Sus trámites y datos financieros protegidos con los más altos estándares.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Servicio 3 -->
-                <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 card-hover">
-                    <div class="w-14 h-14 bg-blue-900 rounded-2xl flex items-center justify-center mb-6 text-white">
-                        <i data-lucide="shield-check"></i>
+                <!-- Tarjeta 3: Collage (Plataforma) -->
+                <!-- Se cambió a DIV y se añadió ID -->
+                <div id="plataforma" class="group visual-card bg-white rounded-3xl shadow-sm relative h-[400px] cursor-default">
+                    <div class="absolute inset-0">
+                        <img src="collage.jpg" alt="Plataforma Multi-dispositivo" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 visual-overlay"></div>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">Defensa Legal</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Representación especializada en casos de rechazos injustificados o retrasos excesivos en la liquidación.
-                    </p>
+                    <div class="absolute bottom-0 left-0 p-8 w-full">
+                        <div class="w-12 h-12 bg-brand-magenta rounded-xl flex items-center justify-center mb-4 text-white shadow-lg shadow-brand-magenta/40">
+                            <i data-lucide="monitor-smartphone"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Gestión 360°</h3>
+                        <p class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                            Desde su tablet, celular o consultorio. Control total de sus ingresos.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Sección Metodología -->
-    <section id="proceso" class="py-24 px-6 bg-slate-900 text-white">
+    <section id="metodologia" class="py-24 px-6 bg-slate-900 text-white overflow-hidden">
         <div class="max-w-7xl mx-auto">
             <div class="grid md:grid-cols-2 gap-20 items-center">
-                <div>
-                    <h2 class="text-4xl font-bold mb-8">Un proceso invisible para usted, implacable con los retrasos.</h2>
-                    <div class="space-y-8">
-                        <div class="flex gap-6">
-                            <div class="flex-shrink-0 w-12 h-12 rounded-full border border-white/20 flex items-center justify-center font-bold text-blue-400">01</div>
+                <div class="relative z-10">
+                    <span class="text-brand-cyan font-bold tracking-widest text-xs uppercase mb-2 block">Flujo de Trabajo</span>
+                    <h2 class="text-4xl font-bold mb-8">Un proceso invisible para usted, <span class="text-brand-cyan">implacable</span> con los retrasos.</h2>
+                    
+                    <div class="space-y-12">
+                        <div class="flex gap-6 relative">
+                            <!-- Línea conectora -->
+                            <div class="absolute left-6 top-12 bottom-[-40px] w-0.5 bg-slate-800"></div>
+                            
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-brand-cyan shadow-[0_0_15px_rgba(0,170,228,0.3)]">01</div>
                             <div>
-                                <h4 class="text-xl font-semibold mb-2">Recepción Digital</h4>
-                                <p class="text-slate-400 text-sm">Usted nos envía sus cartas vía WhatsApp o Portal Web. Nosotros nos encargamos de todo el registro digital.</p>
+                                <h4 class="text-xl font-semibold mb-2 text-white">Digitalización Inmediata</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">Suba la foto de su reporte médico desde nuestra app. Nosotros iniciamos la gestión en menos de 24 horas.</p>
                             </div>
                         </div>
-                        <div class="flex gap-6">
-                            <div class="flex-shrink-0 w-12 h-12 rounded-full border border-white/20 flex items-center justify-center font-bold text-blue-400">02</div>
+                        
+                        <div class="flex gap-6 relative">
+                            <div class="absolute left-6 top-12 bottom-[-40px] w-0.5 bg-slate-800"></div>
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-brand-magenta shadow-[0_0_15px_rgba(230,0,126,0.3)]">02</div>
                             <div>
-                                <h4 class="text-xl font-semibold mb-2">Conciliación Activa</h4>
-                                <p class="text-slate-400 text-sm">Seguimiento semanal con ejecutivos de cuenta en todas las aseguradoras del país.</p>
+                                <h4 class="text-xl font-semibold mb-2 text-white">Conciliación Bancaria</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">Cruzamos la información con las aseguradoras. Si falta un centavo, activamos la reclamación legal automáticamente.</p>
                             </div>
                         </div>
+
                         <div class="flex gap-6">
-                            <div class="flex-shrink-0 w-12 h-12 rounded-full border border-white/20 flex items-center justify-center font-bold text-blue-400">03</div>
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-brand-green border border-transparent flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(140,198,63,0.5)]">03</div>
                             <div>
-                                <h4 class="text-xl font-semibold mb-2">Depósito Directo</h4>
-                                <p class="text-slate-400 text-sm">Los honorarios llegan directamente a su cuenta bancaria. Solo facturamos éxito tras la recepción del pago.</p>
+                                <h4 class="text-xl font-semibold mb-2 text-white">Dispersión de Fondos</h4>
+                                <p class="text-slate-400 text-sm leading-relaxed">Reciba notificaciones en tiempo real cuando el dinero toque su cuenta. Transparencia absoluta.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="bg-white/5 p-10 rounded-[40px] border border-white/10">
-                    <h4 class="text-2xl font-bold mb-6 text-center">Dashboard de Control</h4>
-                    <div class="space-y-4">
-                        <div class="bg-white/10 p-4 rounded-2xl flex justify-between items-center">
-                            <span class="text-sm">Pagos Recuperados (Mes)</span>
-                            <span class="text-emerald-400 font-bold">$128,450.00</span>
+
+                <!-- Dashboard Simulado con CSS -->
+                <div class="relative">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-brand-cyan to-brand-magenta rounded-[40px] blur opacity-20"></div>
+                    <div class="bg-[#0f172a] p-8 rounded-[40px] border border-slate-800 relative shadow-2xl">
+                        <!-- Header del Dashboard -->
+                        <div class="flex justify-between items-center mb-8">
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="text-slate-500 text-xs font-mono">dashboard.cobromed.com</div>
                         </div>
-                        <div class="bg-white/10 p-4 rounded-2xl flex justify-between items-center">
-                            <span class="text-sm">Gestiones Activas</span>
-                            <span class="text-blue-400 font-bold">24 Cartas</span>
+
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
+                                <span class="text-xs text-slate-400 block mb-1">Recuperado este mes</span>
+                                <span class="text-2xl font-bold text-white">$128,450</span>
+                            </div>
+                            <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
+                                <span class="text-xs text-slate-400 block mb-1">Eficiencia de Cobro</span>
+                                <span class="text-2xl font-bold text-brand-green">98.5%</span>
+                            </div>
                         </div>
-                        <div class="bg-white/10 p-4 rounded-2xl flex justify-between items-center">
-                            <span class="text-sm">Ahorro en Tiempo Administrativo</span>
-                            <span class="text-white font-bold">18 hrs/mes</span>
+
+                        <!-- Gráfico de barras simulado -->
+                        <div class="bg-slate-800/30 p-6 rounded-2xl border border-slate-700">
+                            <div class="flex justify-between items-end h-40 gap-2">
+                                <div class="w-full bg-brand-blue/30 rounded-t-lg h-[40%] relative group">
+                                    <div class="absolute bottom-0 w-full bg-brand-blue rounded-t-lg h-0 group-hover:h-full transition-all duration-500"></div>
+                                </div>
+                                <div class="w-full bg-brand-cyan/30 rounded-t-lg h-[60%] relative group">
+                                    <div class="absolute bottom-0 w-full bg-brand-cyan rounded-t-lg h-0 group-hover:h-full transition-all duration-500 delay-75"></div>
+                                </div>
+                                <div class="w-full bg-brand-magenta/30 rounded-t-lg h-[80%] relative group">
+                                    <div class="absolute bottom-0 w-full bg-brand-magenta rounded-t-lg h-0 group-hover:h-full transition-all duration-500 delay-150"></div>
+                                </div>
+                                <div class="w-full bg-brand-green/30 rounded-t-lg h-[50%] relative group">
+                                    <div class="absolute bottom-0 w-full bg-brand-green rounded-t-lg h-0 group-hover:h-full transition-all duration-500 delay-200"></div>
+                                </div>
+                                <div class="w-full bg-white/30 rounded-t-lg h-[90%] relative group">
+                                    <div class="absolute bottom-0 w-full bg-white rounded-t-lg h-0 group-hover:h-full transition-all duration-500 delay-300"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between text-xs text-slate-500 mt-4">
+                                <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mt-8 flex justify-center">
-                         <div class="w-full h-32 bg-blue-500/10 rounded-2xl relative overflow-hidden flex items-end px-2 gap-1">
-                            <div class="w-full bg-blue-500 h-[30%] rounded-t-sm"></div>
-                            <div class="w-full bg-blue-400 h-[50%] rounded-t-sm"></div>
-                            <div class="w-full bg-blue-600 h-[40%] rounded-t-sm"></div>
-                            <div class="w-full bg-emerald-500 h-[80%] rounded-t-sm"></div>
-                            <div class="w-full bg-blue-300 h-[60%] rounded-t-sm"></div>
-                            <div class="w-full bg-blue-700 h-[90%] rounded-t-sm"></div>
-                         </div>
                     </div>
                 </div>
             </div>
@@ -249,55 +394,56 @@
     </section>
 
     <!-- Contacto -->
-    <section id="contacto" class="py-24 px-6 bg-slate-50">
-        <div class="max-w-3xl mx-auto">
-            <div class="bg-white p-12 rounded-[40px] shadow-sm border border-slate-100">
+    <section id="contacto" class="py-24 px-6 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-slate-50 p-12 rounded-[3rem] shadow-xl shadow-slate-200/50 border border-slate-100">
                 <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold mb-2">Agende una Auditoría Gratuita</h2>
-                    <p class="text-slate-500">Analizaremos su cartera de honorarios pendientes sin costo inicial.</p>
+                    <span class="text-brand-magenta font-bold tracking-widest text-xs uppercase mb-2 block">Empiece hoy</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-slate-900">Agende una Auditoría Gratuita</h2>
+                    <p class="text-slate-500 text-lg">Déjenos demostrarle cuánto dinero podemos recuperar de su cartera vencida.</p>
                 </div>
                 <form class="space-y-6">
                     <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Nombre Completo</label>
-                            <input type="text" placeholder="Dr. Alejandro Gómez" class="w-full px-5 py-4 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold uppercase tracking-widest text-slate-400">Nombre Completo</label>
+                            <input type="text" placeholder="Dr. Alejandro Gómez" class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-cyan focus:border-transparent outline-none transition">
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Especialidad</label>
-                            <input type="text" placeholder="Cardiología" class="w-full px-5 py-4 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+                        <div class="space-y-2">
+                            <label class="block text-xs font-bold uppercase tracking-widest text-slate-400">Especialidad</label>
+                            <input type="text" placeholder="Cardiología, Neurología..." class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-cyan focus:border-transparent outline-none transition">
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">WhatsApp de Contacto</label>
-                        <input type="tel" placeholder="+52 ..." class="w-full px-5 py-4 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+                    <div class="space-y-2">
+                        <label class="block text-xs font-bold uppercase tracking-widest text-slate-400">WhatsApp / Teléfono</label>
+                        <input type="tel" placeholder="+52 55..." class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-cyan focus:border-transparent outline-none transition">
                     </div>
-                    <button class="w-full bg-blue-600 text-white py-5 rounded-2xl font-bold hover:bg-blue-700 transition shadow-xl shadow-blue-100">
+                    <button class="w-full bg-slate-900 text-white py-5 rounded-2xl font-bold hover:bg-brand-blue transition shadow-xl flex items-center justify-center gap-2 group">
                         Enviar solicitud de contacto
+                        <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
                     </button>
-                    <p class="text-center text-[10px] text-slate-400">Sus datos están protegidos por nuestra Política de Privacidad y el Secreto Profesional.</p>
+                    <p class="text-center text-[10px] text-slate-400 mt-4">
+                        <i data-lucide="lock" class="w-3 h-3 inline mr-1"></i>
+                        Sus datos están encriptados y protegidos por nuestra Política de Privacidad.
+                    </p>
                 </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-12 px-6 border-t border-slate-100">
+    <footer class="py-12 px-6 border-t border-slate-100 bg-white">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="flex items-center gap-2">
-                <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="40" rx="8" fill="#1e40af"/>
-                    <path d="M12 14H28M12 20H28M12 26H20" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M25 24L28 27L33 21" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span class="font-bold text-slate-900">HonorariosMédicos+</span>
+            <div class="flex items-center gap-3">
+                <img src="logo cobromed.jpg" alt="Cobromed Logo Pequeño" class="h-10 w-auto opacity-80 grayscale hover:grayscale-0 transition duration-500">
+                <span class="text-xs text-slate-400 border-l border-slate-300 pl-3 ml-2">Gestión Médica Inteligente</span>
             </div>
-            <div class="flex gap-8 text-sm text-slate-500">
-                <a href="#" class="hover:text-blue-600">Aviso Legal</a>
-                <a href="#" class="hover:text-blue-600">Privacidad</a>
-                <a href="#" class="hover:text-blue-600">Soporte</a>
+            <div class="flex gap-8 text-sm text-slate-500 font-medium">
+                <a href="#" class="hover:text-brand-cyan transition">Aviso Legal</a>
+                <a href="#" class="hover:text-brand-cyan transition">Privacidad</a>
+                <a href="#" class="hover:text-brand-cyan transition">Soporte</a>
             </div>
-            <div class="text-sm text-slate-400 italic">
-                &copy; 2024 Gestión Elite. Todos los derechos reservados.
+            <div class="text-sm text-slate-400">
+                &copy; 2024 Cobromed. Todos los derechos reservados.
             </div>
         </div>
     </footer>
@@ -310,9 +456,24 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                
+                // Obtenemos el ID destino
+                const targetId = this.getAttribute('href');
+                
+                // Si es un link vacío o solo '#', no hacemos nada
+                if (targetId === '#' || !targetId) return;
+
+                // Buscamos el elemento
+                const targetElement = document.querySelector(targetId);
+
+                // Solo hacemos scroll si el elemento existe
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                } else {
+                    console.warn(`Elemento con id ${targetId} no encontrado`);
+                }
             });
         });
     </script>
