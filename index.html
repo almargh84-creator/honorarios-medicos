@@ -1,488 +1,520 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-MX">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cobromed | Gestión Inteligente de Honorarios Médicos</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            cyan: '#00AAE4',
-                            magenta: '#E6007E',
-                            green: '#8CC63F',
-                            dark: '#333333',
-                            blue: '#1E40AF'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <title>COBROMED | Expertos en Cobranza Médica ante Aseguradoras</title>
+    <meta name="description" content="Servicio B2B gestión de honorarios médicos para especialistas en México. Delega tu cobranza, evita rechazos, mejora tu flujo de caja con total transparencia.">
+    <!-- Fuentes Modernas: Outfit para titulares (tecnológico/confiable), Inter para lectura -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Iconos Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
+        /* =========================================================================
+           Variables y Sistema de Diseño (Design System)
+           ========================================================================= */
+        :root {
+            --primary: #0A2540;   /* Azul naval premium (Confianza/Autoridad) */
+            --primary-light: #18416d;
+            --secondary: #00D4FF; /* Cyan vibrante (Tecnología/Modernidad) */
+            --accent: #00E676;    /* Verde éxito (Resultado/Aprobación) */
+            --bg-body: #F8FAFC;   /* Gris azulado ultra claro */
+            --bg-white: #FFFFFF;
+            --text-main: #334155;
+            --text-light: #64748B;
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 40px -10px rgba(0, 212, 255, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        .hero-gradient {
-            background: radial-gradient(circle at top right, #f0f9ff, #fff);
-        }
-        /* Efecto de Menú Visual */
-        .visual-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
-        }
-        .visual-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .visual-card img {
-            transition: transform 0.6s ease;
-        }
-        .visual-card:hover img {
-            transform: scale(1.05);
-        }
-        .visual-overlay {
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
-        }
+
+        /* =========================================================================
+           Reset y Básicos
+           ========================================================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; color: var(--text-main); background: var(--bg-body); line-height: 1.6; overflow-x: hidden; }
+        h1, h2, h3, h4, h5, .logo { font-family: 'Outfit', sans-serif; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .text-gradient { background: linear-gradient(135deg, var(--primary) 0%, #0077b6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* =========================================================================
+           Botones (CTAs)
+           ========================================================================= */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 32px; border-radius: var(--radius-sm); font-weight: 600; font-family: 'Outfit', sans-serif; font-size: 1.1rem; cursor: pointer; transition: var(--transition); text-align: center; border: none; outline: none; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); color: var(--bg-white); box-shadow: 0 4px 15px rgba(10, 37, 64, 0.3); }
+        .btn-primary:hover { background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(10, 37, 64, 0.4); }
+        .btn-secondary { background: var(--bg-white); color: var(--primary); border: 2px solid var(--primary); }
+        .btn-secondary:hover { background: var(--primary); color: var(--bg-white); }
+        .btn-accent { background: var(--secondary); color: var(--primary); font-weight: 700; box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3); }
+        .btn-accent:hover { background: #00bce6; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5); }
+
+        /* =========================================================================
+           Navegación (Header)
+           ========================================================================= */
+        header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05); transition: var(--transition); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo { font-size: 28px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px; }
+        .logo-icon { color: var(--secondary); font-size: 32px; }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; color: var(--text-main); transition: var(--transition); }
+        .nav-links a:hover { color: var(--secondary); }
         
-        .submenu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            min-width: 220px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-            padding: 8px;
-            z-index: 50;
-            border: 1px solid #f1f5f9;
-            margin-top: 10px;
+        /* =========================================================================
+           Sección 1: Hero (Atracción y Propuesta de Valor)
+           ========================================================================= */
+        .hero { padding: 180px 0 100px; text-align: center; position: relative; background: radial-gradient(circle at top right, rgba(0,212,255,0.08) 0%, rgba(248,250,252,0) 60%); }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0, 212, 255, 0.1); color: #0077b6; padding: 8px 16px; border-radius: 50px; font-size: 0.9rem; font-weight: 600; margin-bottom: 24px; animation: slideDown 0.6s ease-out; }
+        .hero h1 { font-size: clamp(2.5rem, 5vw, 4.2rem); color: var(--primary); margin-bottom: 24px; line-height: 1.1; letter-spacing: -1.5px; max-width: 900px; margin-inline: auto; animation: fadeInUp 0.8s ease-out 0.2s both; }
+        .hero p { font-size: clamp(1.1rem, 2vw, 1.25rem); color: var(--text-light); max-width: 700px; margin: 0 auto 40px; animation: fadeInUp 0.8s ease-out 0.4s both; }
+        .hero-cta { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; animation: fadeInUp 0.8s ease-out 0.6s both; }
+        .hero-trust { margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(0,0,0,0.05); animation: fadeInUp 0.8s ease-out 0.8s both; }
+        .hero-trust p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .trust-logos { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; opacity: 0.6; filter: grayscale(100%); }
+        .trust-logos span { font-family: 'Outfit'; font-weight: 800; font-size: 1.5rem; color: var(--text-main); }
+
+        /* =========================================================================
+           Secciones Generales
+           ========================================================================= */
+        .section { padding: 100px 0; }
+        .section-light { background: var(--bg-white); }
+        .section-header { text-align: center; margin-bottom: 60px; max-width: 700px; margin-inline: auto; }
+        .section-header h2 { font-size: clamp(2rem, 4vw, 2.75rem); color: var(--primary); margin-bottom: 16px; letter-spacing: -1px; }
+        .section-header p { font-size: 1.15rem; color: var(--text-light); }
+
+        /* =========================================================================
+           Sección 2: Beneficios Financieros y Prevención de Rechazos
+           ========================================================================= */
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; }
+        .feature-card { background: var(--bg-white); padding: 40px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); transition: var(--transition); border: 1px solid rgba(0,0,0,0.03); position: relative; overflow: hidden; }
+        .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--secondary), var(--primary)); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); border-color: rgba(0, 212, 255, 0.2); }
+        .feature-card:hover::before { transform: scaleX(1); }
+        .icon-box { width: 64px; height: 64px; background: rgba(0, 212, 255, 0.1); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; color: var(--primary); font-size: 32px; transition: var(--transition); }
+        .feature-card:hover .icon-box { background: var(--primary); color: var(--secondary); transform: scale(1.1); }
+        .feature-card h3 { font-size: 1.4rem; margin-bottom: 16px; color: var(--primary); }
+        .feature-card p { color: var(--text-light); font-size: 1rem; }
+
+        /* =========================================================================
+           Sección 3: Cómo Funciona (Proceso)
+           ========================================================================= */
+        .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; position: relative; }
+        .step-card { text-align: center; padding: 32px 24px; }
+        .step-number { width: 60px; height: 60px; background: var(--primary); color: var(--bg-white); font-family: 'Outfit'; font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin: 0 auto 24px; box-shadow: 0 0 0 8px rgba(10, 37, 64, 0.1); }
+        .step-card h3 { font-size: 1.25rem; color: var(--primary); margin-bottom: 12px; }
+        .step-card p { color: var(--text-light); font-size: 0.95rem; }
+
+        /* =========================================================================
+           Sección 4: Transparencia con Monday.com (Autoridad y Herramientas)
+           ========================================================================= */
+        .monday-section { background: var(--primary); color: var(--bg-white); padding: 100px 0; overflow: hidden; margin: 40px 0; border-radius: var(--radius-lg); position: relative; }
+        .monday-section::after { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(0,212,255,0.15) 0%, rgba(10,37,64,0) 70%); top: -200px; right: -200px; border-radius: 50%; pointer-events: none; }
+        .monday-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .monday-content h2 { font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: 24px; line-height: 1.1; color: var(--bg-white); }
+        .monday-content .highlight { color: var(--secondary); }
+        .monday-content p { font-size: 1.15rem; margin-bottom: 32px; color: rgba(255,255,255,0.8); }
+        .monday-list { margin-bottom: 40px; }
+        .monday-list li { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+        .monday-list i { color: var(--secondary); font-size: 24px; margin-top: 2px; }
+        .monday-list div h4 { font-size: 1.2rem; margin-bottom: 4px; color: var(--bg-white); }
+        .monday-list div p { font-size: 0.95rem; color: rgba(255,255,255,0.7); margin: 0; }
+        
+        .monday-visual { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); padding: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); transform: perspective(1000px) rotateY(-5deg); transition: var(--transition); }
+        .monday-visual:hover { transform: perspective(1000px) rotateY(0deg) scale(1.02); border-color: rgba(0, 212, 255, 0.3); }
+        .mock-dashboard { background: var(--bg-white); border-radius: var(--radius-sm); overflow: hidden; }
+        .mock-header { background: #E0E4EB; padding: 12px 16px; display: flex; gap: 8px; }
+        .mock-dot { width: 12px; height: 12px; border-radius: 50%; background: #CBD5E1; }
+        .mock-dot:nth-child(1) { background: #FF5F56; }
+        .mock-dot:nth-child(2) { background: #FFBD2E; }
+        .mock-dot:nth-child(3) { background: #27C93F; }
+        .mock-table { padding: 16px; }
+        .mock-row { display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 12px; padding: 12px; border-bottom: 1px solid #F1F5F9; font-size: 0.85rem; color: var(--text-main); align-items: center; }
+        .mock-row:first-child { font-weight: 700; color: var(--text-light); }
+        .status-badge { padding: 4px 12px; border-radius: 4px; font-weight: 600; text-align: center; color: var(--bg-white); }
+        .status-paid { background: #00C875; }
+        .status-process { background: #FDAB3D; }
+        .status-sent { background: #579BFC; }
+
+        /* =========================================================================
+           Sección 5: Testimonios (Social Proof)
+           ========================================================================= */
+        .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .testimonial-card { background: var(--bg-body); padding: 40px; border-radius: var(--radius-md); border: 1px solid rgba(0,0,0,0.03); }
+        .stars { color: #FFBD2E; font-size: 20px; margin-bottom: 16px; display: flex; gap: 4px; }
+        .testimonial-text { font-style: italic; color: var(--text-main); margin-bottom: 24px; font-size: 1.05rem; }
+        .doc-info { display: flex; align-items: center; gap: 16px; }
+        .doc-avatar { width: 48px; height: 48px; background: var(--primary); color: var(--bg-white); display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 700; font-family: 'Outfit'; }
+        .doc-details h4 { color: var(--primary); font-size: 1.1rem; }
+        .doc-details p { font-size: 0.85rem; color: var(--text-light); }
+
+        /* =========================================================================
+           Sección 6: Preguntas Frecuentes (FAQ)
+           ========================================================================= */
+        .faq-wrapper { max-width: 800px; margin: 0 auto; }
+        .faq-item { background: var(--bg-white); margin-bottom: 16px; border-radius: var(--radius-sm); box-shadow: var(--shadow-sm); border: 1px solid rgba(0,0,0,0.03); overflow: hidden; }
+        .faq-question { width: 100%; text-align: left; padding: 24px; background: none; border: none; font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 600; color: var(--primary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: var(--transition); }
+        .faq-question:hover { color: var(--secondary); background: rgba(0, 212, 255, 0.02); }
+        .faq-icon { transition: transform 0.3s ease; color: var(--secondary); font-size: 24px; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: all 0.3s ease; background: var(--bg-white); }
+        .faq-answer p { padding: 0 24px 24px; color: var(--text-light); font-size: 1rem; }
+        .faq-item.active .faq-answer { max-height: 300px; }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+
+        /* =========================================================================
+           CTA Final
+           ========================================================================= */
+        .cta-section { text-align: center; padding: 100px 24px; background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(10, 37, 64, 0.05) 100%); border-radius: var(--radius-lg); margin: 60px auto; max-width: 1200px; }
+        .cta-section h2 { font-size: clamp(2rem, 4vw, 3rem); color: var(--primary); margin-bottom: 24px; }
+        .cta-section p { font-size: 1.2rem; color: var(--text-light); margin-bottom: 40px; max-width: 600px; margin-inline: auto; }
+
+        /* =========================================================================
+           Footer
+           ========================================================================= */
+        footer { background: var(--primary); color: rgba(255, 255, 255, 0.7); padding: 80px 0 24px; border-top: 4px solid var(--secondary); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 60px; margin-bottom: 60px; }
+        .footer-brand .logo { color: var(--bg-white); margin-bottom: 16px; }
+        .footer-brand p { margin-bottom: 24px; font-size: 0.95rem; }
+        .social-links { display: flex; gap: 16px; }
+        .social-links a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--bg-white); font-size: 20px; transition: var(--transition); }
+        .social-links a:hover { background: var(--secondary); color: var(--primary); transform: translateY(-3px); }
+        .footer-col h4 { color: var(--bg-white); font-size: 1.2rem; margin-bottom: 24px; }
+        .footer-col ul li { margin-bottom: 12px; }
+        .footer-col ul li a { transition: var(--transition); font-size: 0.95rem; }
+        .footer-col ul li a:hover { color: var(--secondary); padding-left: 4px; }
+        .contact-info li { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font-size: 0.95rem; }
+        .contact-info i { color: var(--secondary); font-size: 20px; }
+        .footer-bottom { text-align: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; }
+
+        /* =========================================================================
+           Animaciones
+           ========================================================================= */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* =========================================================================
+           Responsive Design
+           ========================================================================= */
+        @media (max-width: 992px) {
+            .monday-grid, .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .monday-visual { transform: none; }
         }
-        .nav-item:hover .submenu {
-            display: block;
-            animation: fadeIn 0.2s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-cta { flex-direction: column; }
+            .hero-cta .btn { width: 100%; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .header-cta { display: none; }
         }
     </style>
 </head>
-<body class="text-slate-800 bg-white">
+<body>
 
-    <!-- Navegación -->
-    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-            <!-- Logo Cobromed -->
-            <a href="#" class="flex items-center gap-2 group">
-                <!-- Se usa una altura mayor (h-16) para que el logo destaque bien -->
-                <img src="logo cobromed.jpg" alt="Cobromed Logo" class="h-16 w-auto object-contain transition-transform group-hover:scale-105">
+    <!-- ================= HEADER ================= -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <i class="ph-fill ph-check-circle logo-icon"></i>
+                COBROMED
             </a>
-
-            <!-- Menú Desktop -->
-            <div class="hidden md:flex items-center gap-8">
-                <div class="relative nav-item">
-                    <a href="#inicio" class="text-sm font-semibold text-slate-600 hover:text-brand-cyan transition">Inicio</a>
-                </div>
-                
-                <div class="relative nav-item group">
-                    <a href="#visual-menu" class="text-sm font-semibold text-slate-600 hover:text-brand-cyan transition flex items-center gap-1">
-                        Soluciones <i data-lucide="chevron-down" class="w-4 h-4 text-brand-magenta"></i>
-                    </a>
-                    <!-- Submenu mejorado -->
-                    <div class="submenu">
-                        <a href="#datos" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-50 transition group">
-                            <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-brand-cyan group-hover:bg-brand-cyan group-hover:text-white transition">
-                                <i data-lucide="bar-chart-2" class="w-4 h-4"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-slate-700">Análisis de Datos</p>
-                                <p class="text-xs text-slate-500">Auditoría precisa</p>
-                            </div>
-                        </a>
-                        <a href="#seguridad" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-50 transition group">
-                            <div class="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center text-brand-green group-hover:bg-brand-green group-hover:text-white transition">
-                                <i data-lucide="shield-check" class="w-4 h-4"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-slate-700">Seguridad</p>
-                                <p class="text-xs text-slate-500">Protección biométrica</p>
-                            </div>
-                        </a>
-                        <a href="#plataforma" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-50 transition group">
-                            <div class="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center text-brand-magenta group-hover:bg-brand-magenta group-hover:text-white transition">
-                                <i data-lucide="layers" class="w-4 h-4"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-slate-700">Plataforma</p>
-                                <p class="text-xs text-slate-500">Gestión integral</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <a href="#metodologia" class="text-sm font-semibold text-slate-600 hover:text-brand-cyan transition">Metodología</a>
-                
-                <!-- Botón CTA -->
-                <a href="#contacto" class="bg-gradient-to-r from-brand-blue to-brand-cyan text-white px-6 py-3 rounded-full text-sm font-bold hover:shadow-lg hover:shadow-brand-cyan/30 transition transform hover:-translate-y-0.5">
-                    Consulta Gratuita
-                </a>
-            </div>
-
-            <!-- Mobile Menu Icon -->
-            <div class="md:hidden">
-                <i data-lucide="menu" class="w-8 h-8 text-slate-700 cursor-pointer"></i>
+            <nav class="nav-links">
+                <a href="#beneficios">Beneficios</a>
+                <a href="#proceso">Cómo Funciona</a>
+                <a href="#transparencia">Transparencia</a>
+                <a href="#faq">Preguntas Frecuentes</a>
+            </nav>
+            <div class="header-cta">
+                <a href="#contacto" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.95rem;">Agendar Llamada</a>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section id="inicio" class="pt-36 pb-20 px-6 hero-gradient relative overflow-hidden">
-        <!-- Decoración de fondo abstracta usando colores del logo -->
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
-        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand-magenta/5 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4"></div>
-
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10">
-            <div class="space-y-8">
-                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-100 rounded-full shadow-sm">
-                    <span class="w-2 h-2 rounded-full bg-brand-green animate-pulse"></span>
-                    <span class="text-xs font-bold tracking-wider text-slate-600 uppercase">Gestión Elite para Especialistas</span>
+    <!-- ================= HERO SECTION ================= -->
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-badge">
+                    <i class="ph ph-shield-check"></i> Exclusivo para Médicos Especialistas en México
                 </div>
-                
-                <h1 class="text-5xl lg:text-7xl font-bold leading-tight text-slate-900">
-                    Tu enfoque es la medicina, <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-blue">el nuestro es tu cobro.</span>
-                </h1>
-                
-                <p class="text-lg text-slate-600 leading-relaxed max-w-lg">
-                    Recuperamos honorarios médicos con la precisión de un cirujano. Tecnología de datos, seguridad biométrica y gestión legal en una sola plataforma.
-                </p>
-
-                <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                    <a href="#visual-menu" class="flex items-center justify-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-xl font-bold hover:bg-slate-800 transition shadow-xl">
-                        Ver Soluciones <i data-lucide="arrow-down" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#contacto" class="flex items-center justify-center gap-2 bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 transition">
-                        Hablar con Asesor
-                    </a>
-                </div>
-
-                <div class="flex items-center gap-4 pt-4 border-t border-slate-200/60">
-                    <div class="flex -space-x-4">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-12 h-12 rounded-full border-2 border-white" alt="Doctor">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-12 h-12 rounded-full border-2 border-white" alt="Doctora">
-                        <div class="w-12 h-12 rounded-full bg-brand-cyan text-white border-2 border-white flex items-center justify-center font-bold text-xs">+500</div>
-                    </div>
-                    <div>
-                        <div class="flex text-yellow-400 mb-1">
-                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
-                        </div>
-                        <p class="text-sm font-medium text-slate-600">Médicos afiliados satisfechos</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Imagen Principal Hero (Medico con Tablet) -->
-            <div class="relative group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-brand-cyan via-brand-magenta to-brand-green rounded-[2.5rem] blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-                <div class="relative bg-white p-2 rounded-[2.5rem] shadow-2xl overflow-hidden">
-                    <img src="medico con tablet.jpg" 
-                         alt="Médico especialista utilizando plataforma Cobromed" 
-                         class="rounded-[2rem] w-full h-[600px] object-cover object-top transform transition duration-700 hover:scale-105">
-                    
-                    <!-- Floating Card -->
-                    <div class="absolute bottom-8 left-8 right-8 bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-slate-100">
-                        <div class="flex items-center justify-between mb-4">
-                            <div>
-                                <p class="text-xs text-slate-500 font-bold uppercase">Estado de Cuenta</p>
-                                <p class="text-2xl font-bold text-brand-dark">$145,200.00</p>
-                            </div>
-                            <div class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-                                <i data-lucide="trending-up" class="w-3 h-3"></i> +12%
-                            </div>
-                        </div>
-                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                            <div class="bg-brand-cyan h-full rounded-full" style="width: 75%"></div>
-                        </div>
-                        <p class="text-xs text-slate-400 mt-2 text-right">Recuperación en tiempo récord</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- NUEVO MENU VISUAL (Proyectando las imágenes adjuntas) -->
-    <section id="visual-menu" class="py-24 px-6 bg-slate-50">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Ecosistema Cobromed</h2>
-                <p class="text-slate-500 max-w-2xl mx-auto">Navegue a través de nuestros pilares de servicio. Seleccione una tarjeta para conocer más.</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Tarjeta 1: Datos -->
-                <!-- Se cambió a DIV y se añadió ID para que el link del menú funcione y no cause error -->
-                <div id="datos" class="group visual-card bg-white rounded-3xl shadow-sm relative h-[400px] cursor-default">
-                    <div class="absolute inset-0">
-                        <img src="datos.jpg" alt="Análisis de datos médicos" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 visual-overlay"></div>
-                    </div>
-                    <div class="absolute bottom-0 left-0 p-8 w-full">
-                        <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 text-white border border-white/30">
-                            <i data-lucide="bar-chart-2"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">Análisis de Datos</h3>
-                        <p class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-300">
-                            Detectamos discrepancias en tabuladores al instante usando tecnología avanzada.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Tarjeta 2: Seguridad (Dedo) -->
-                <!-- Se cambió a DIV y se añadió ID -->
-                <div id="seguridad" class="group visual-card bg-white rounded-3xl shadow-sm relative h-[400px] cursor-default md:-mt-8">
-                    <div class="absolute inset-0 border-4 border-brand-cyan/20 rounded-3xl z-10 pointer-events-none"></div>
-                    <div class="absolute inset-0">
-                        <img src="seguridad con dedo.jpg" alt="Seguridad biométrica" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 visual-overlay"></div>
-                    </div>
-                    <div class="absolute bottom-0 left-0 p-8 w-full z-20">
-                        <div class="w-12 h-12 bg-brand-cyan rounded-xl flex items-center justify-center mb-4 text-white shadow-lg shadow-brand-cyan/40">
-                            <i data-lucide="fingerprint"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">Seguridad Total</h3>
-                        <p class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-300">
-                            Sus trámites y datos financieros protegidos con los más altos estándares.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Tarjeta 3: Collage (Plataforma) -->
-                <!-- Se cambió a DIV y se añadió ID -->
-                <div id="plataforma" class="group visual-card bg-white rounded-3xl shadow-sm relative h-[400px] cursor-default">
-                    <div class="absolute inset-0">
-                        <img src="collage.jpg" alt="Plataforma Multi-dispositivo" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 visual-overlay"></div>
-                    </div>
-                    <div class="absolute bottom-0 left-0 p-8 w-full">
-                        <div class="w-12 h-12 bg-brand-magenta rounded-xl flex items-center justify-center mb-4 text-white shadow-lg shadow-brand-magenta/40">
-                            <i data-lucide="monitor-smartphone"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">Gestión 360°</h3>
-                        <p class="text-white/80 text-sm opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-300">
-                            Desde su tablet, celular o consultorio. Control total de sus ingresos.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección Metodología -->
-    <section id="metodologia" class="py-24 px-6 bg-slate-900 text-white overflow-hidden">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-20 items-center">
-                <div class="relative z-10">
-                    <span class="text-brand-cyan font-bold tracking-widest text-xs uppercase mb-2 block">Flujo de Trabajo</span>
-                    <h2 class="text-4xl font-bold mb-8">Un proceso invisible para usted, <span class="text-brand-cyan">implacable</span> con los retrasos.</h2>
-                    
-                    <div class="space-y-12">
-                        <div class="flex gap-6 relative">
-                            <!-- Línea conectora -->
-                            <div class="absolute left-6 top-12 bottom-[-40px] w-0.5 bg-slate-800"></div>
-                            
-                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-brand-cyan shadow-[0_0_15px_rgba(0,170,228,0.3)]">01</div>
-                            <div>
-                                <h4 class="text-xl font-semibold mb-2 text-white">Digitalización Inmediata</h4>
-                                <p class="text-slate-400 text-sm leading-relaxed">Suba la foto de su reporte médico desde nuestra app. Nosotros iniciamos la gestión en menos de 24 horas.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex gap-6 relative">
-                            <div class="absolute left-6 top-12 bottom-[-40px] w-0.5 bg-slate-800"></div>
-                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-brand-magenta shadow-[0_0_15px_rgba(230,0,126,0.3)]">02</div>
-                            <div>
-                                <h4 class="text-xl font-semibold mb-2 text-white">Conciliación Bancaria</h4>
-                                <p class="text-slate-400 text-sm leading-relaxed">Cruzamos la información con las aseguradoras. Si falta un centavo, activamos la reclamación legal automáticamente.</p>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-6">
-                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-brand-green border border-transparent flex items-center justify-center font-bold text-white shadow-[0_0_15px_rgba(140,198,63,0.5)]">03</div>
-                            <div>
-                                <h4 class="text-xl font-semibold mb-2 text-white">Dispersión de Fondos</h4>
-                                <p class="text-slate-400 text-sm leading-relaxed">Reciba notificaciones en tiempo real cuando el dinero toque su cuenta. Transparencia absoluta.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dashboard Simulado con CSS -->
-                <div class="relative">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-brand-cyan to-brand-magenta rounded-[40px] blur opacity-20"></div>
-                    <div class="bg-[#0f172a] p-8 rounded-[40px] border border-slate-800 relative shadow-2xl">
-                        <!-- Header del Dashboard -->
-                        <div class="flex justify-between items-center mb-8">
-                            <div class="flex items-center gap-3">
-                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                            </div>
-                            <div class="text-slate-500 text-xs font-mono">dashboard.cobromed.com</div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
-                                <span class="text-xs text-slate-400 block mb-1">Recuperado este mes</span>
-                                <span class="text-2xl font-bold text-white">$128,450</span>
-                            </div>
-                            <div class="bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
-                                <span class="text-xs text-slate-400 block mb-1">Eficiencia de Cobro</span>
-                                <span class="text-2xl font-bold text-brand-green">98.5%</span>
-                            </div>
-                        </div>
-
-                        <!-- Gráfico de barras simulado -->
-                        <div class="bg-slate-800/30 p-6 rounded-2xl border border-slate-700">
-                            <div class="flex justify-between items-end h-40 gap-2">
-                                <div class="w-full bg-brand-blue/30 rounded-t-lg h-[40%] relative group">
-                                    <div class="absolute bottom-0 w-full bg-brand-blue rounded-t-lg h-0 group-hover:h-full transition-all duration-500"></div>
-                                </div>
-                                <div class="w-full bg-brand-cyan/30 rounded-t-lg h-[60%] relative group">
-                                    <div class="absolute bottom-0 w-full bg-brand-cyan rounded-t-lg h-0 group-hover:h-full transition-all duration-500 delay-75"></div>
-                                </div>
-                                <div class="w-full bg-brand-magenta/30 rounded-t-lg h-[80%] relative group">
-                                    <div class="absolute bottom-0 w-full bg-brand-magenta rounded-t-lg h-0 group-hover:h-full transition-all duration-500 delay-150"></div>
-                                </div>
-                                <div class="w-full bg-brand-green/30 rounded-t-lg h-[50%] relative group">
-                                    <div class="absolute bottom-0 w-full bg-brand-green rounded-t-lg h-0 group-hover:h-full transition-all duration-500 delay-200"></div>
-                                </div>
-                                <div class="w-full bg-white/30 rounded-t-lg h-[90%] relative group">
-                                    <div class="absolute bottom-0 w-full bg-white rounded-t-lg h-0 group-hover:h-full transition-all duration-500 delay-300"></div>
-                                </div>
-                            </div>
-                            <div class="flex justify-between text-xs text-slate-500 mt-4">
-                                <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contacto -->
-    <section id="contacto" class="py-24 px-6 bg-white">
-        <div class="max-w-4xl mx-auto">
-            <div class="bg-slate-50 p-12 rounded-[3rem] shadow-xl shadow-slate-200/50 border border-slate-100">
-                <div class="text-center mb-10">
-                    <span class="text-brand-magenta font-bold tracking-widest text-xs uppercase mb-2 block">Empiece hoy</span>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-slate-900">Agende una Auditoría Gratuita</h2>
-                    <p class="text-slate-500 text-lg">Déjenos demostrarle cuánto dinero podemos recuperar de su cartera vencida.</p>
-                </div>
-                <form class="space-y-6">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-widest text-slate-400">Nombre Completo</label>
-                            <input type="text" placeholder="Dr. Alejandro Gómez" class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-cyan focus:border-transparent outline-none transition">
-                        </div>
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-widest text-slate-400">Especialidad</label>
-                            <input type="text" placeholder="Cardiología, Neurología..." class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-cyan focus:border-transparent outline-none transition">
-                        </div>
-                    </div>
-                    <div class="space-y-2">
-                        <label class="block text-xs font-bold uppercase tracking-widest text-slate-400">WhatsApp / Teléfono</label>
-                        <input type="tel" placeholder="+52 55..." class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-cyan focus:border-transparent outline-none transition">
-                    </div>
-                    <button class="w-full bg-slate-900 text-white py-5 rounded-2xl font-bold hover:bg-brand-blue transition shadow-xl flex items-center justify-center gap-2 group">
-                        Enviar solicitud de contacto
-                        <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                <h1>Delega tu Cobranza Médica y <span class="text-gradient">Recupera tu Tiempo</span></h1>
+                <p>Gestionamos el cobro de tus honorarios médicos ante aseguradoras. Maximizamos tus ingresos, eliminamos los rechazos y te damos control total en tiempo real sin que muevas un dedo.</p>
+                <div class="hero-cta">
+                    <button class="btn btn-primary">
+                        Agendar Asesoría Gratuita <i class="ph ph-arrow-right"></i>
                     </button>
-                    <p class="text-center text-[10px] text-slate-400 mt-4">
-                        <i data-lucide="lock" class="w-3 h-3 inline mr-1"></i>
-                        Sus datos están encriptados y protegidos por nuestra Política de Privacidad.
-                    </p>
-                </form>
+                    <button class="btn btn-secondary">
+                        Conocer Más Detalles
+                    </button>
+                </div>
+                
+                <div class="hero-trust">
+                    <p>Gestionamos expedientes de las principales aseguradoras</p>
+                    <div class="trust-logos">
+                        <span>GNP Seguros</span>
+                        <span>MetLife</span>
+                        <span>AXA</span>
+                        <span>Mapfre</span>
+                        <span>Bupa</span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer class="py-12 px-6 border-t border-slate-100 bg-white">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="flex items-center gap-3">
-                <img src="logo cobromed.jpg" alt="Cobromed Logo Pequeño" class="h-10 w-auto opacity-80 grayscale hover:grayscale-0 transition duration-500">
-                <span class="text-xs text-slate-400 border-l border-slate-300 pl-3 ml-2">Gestión Médica Inteligente</span>
+        <!-- ================= SECCIÓN OBJETIVOS ================= -->
+        <section id="beneficios" class="section section-light">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Blindaje Financiero para tu Práctica Médica</h2>
+                    <p>Entendemos que tu prioridad son los pacientes. Nuestra prioridad es que cada cirugía y consulta sea pagada en tiempo, forma y monto exacto.</p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="feature-card">
+                        <div class="icon-box"><i class="ph ph-shield-warning"></i></div>
+                        <h3>Prevención de Rechazos al 99%</h3>
+                        <p>Auditamos cada expediente antes de ingresarlo. Evitamos errores de tabulador, omisiones de reportes y devoluciones que retrasan tu pago por meses.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon-box"><i class="ph ph-chart-line-up"></i></div>
+                        <h3>Optimización de Tabuladores</h3>
+                        <p>Nuestros analistas conocen las reglas de negocio de cada aseguradora para asegurar el cobro máximo permitido según tu especialidad y nivel hospitalario.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon-box"><i class="ph ph-wallet"></i></div>
+                        <h3>Flujo de Caja Constante</h3>
+                        <p>Reducimos los tiempos de respuesta de las aseguradoras. Pasamos de meses de espera a pagos semanales constantes directo en tu cuenta bancaria.</p>
+                    </div>
+                </div>
             </div>
-            <div class="flex gap-8 text-sm text-slate-500 font-medium">
-                <a href="#" class="hover:text-brand-cyan transition">Aviso Legal</a>
-                <a href="#" class="hover:text-brand-cyan transition">Privacidad</a>
-                <a href="#" class="hover:text-brand-cyan transition">Soporte</a>
+        </section>
+
+        <!-- ================= SECCIÓN: TRANSPARENCIA (MONDAY.COM) ================= -->
+        <section id="transparencia" class="container">
+            <div class="monday-section">
+                <div class="container monday-grid">
+                    <div class="monday-content">
+                        <h2>Control Absoluto con <br><span class="highlight">Transparencia Total</span></h2>
+                        <p>A diferencia de otras agencias donde tu dinero es un misterio, en COBROMED utilizamos <strong>Monday.com</strong> para darte acceso 24/7 al estatus de cada centavo.</p>
+                        
+                        <ul class="monday-list">
+                            <li>
+                                <i class="ph-fill ph-check-circle"></i>
+                                <div>
+                                    <h4>Tablero en Tiempo Real</h4>
+                                    <p>Visualiza desde tu celular si el trámite está ingresado, en dictamen o pagado.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="ph-fill ph-bell-ringing"></i>
+                                <div>
+                                    <h4>Notificaciones Automáticas</h4>
+                                    <p>Recibe alertas instantáneas en tu correo o WhatsApp cada vez que la aseguradora libera un pago.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="ph-fill ph-lock-key"></i>
+                                <div>
+                                    <h4>Auditoría Cero Dudas</h4>
+                                    <p>Descarga tus reportes de cobranza y comprobantes de retención (PDF y XML) en un solo clic para tu contador.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="monday-visual">
+                        <div class="mock-dashboard">
+                            <div class="mock-header">
+                                <div class="mock-dot"></div>
+                                <div class="mock-dot"></div>
+                                <div class="mock-dot"></div>
+                            </div>
+                            <div class="mock-table">
+                                <div class="mock-row">
+                                    <div>Paciente / Procedimiento</div>
+                                    <div>Aseguradora</div>
+                                    <div style="text-align: right;">Estatus</div>
+                                </div>
+                                <div class="mock-row">
+                                    <div>
+                                        <strong>Apdo. Colecistectomía</strong><br>
+                                        <span style="color:#888; font-size:11px;">Folio: 44021A</span>
+                                    </div>
+                                    <div>GNP Seguros</div>
+                                    <div style="display: flex; justify-content: flex-end;"><span class="status-badge status-paid">Pagado $24,500</span></div>
+                                </div>
+                                <div class="mock-row">
+                                    <div>
+                                        <strong>Apdo. Cesárea</strong><br>
+                                        <span style="color:#888; font-size:11px;">Folio: 99124B</span>
+                                    </div>
+                                    <div>AXA</div>
+                                    <div style="display: flex; justify-content: flex-end;"><span class="status-badge status-process">En Dictamen</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="text-sm text-slate-400">
-                &copy; 2024 Cobromed. Todos los derechos reservados.
+        </section>
+
+        <!-- ================= SECCIÓN PROCESO ================= -->
+        <section id="proceso" class="section section-light">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Tu Cobranza en 4 Pasos Simples</h2>
+                    <p>Olvídate del papeleo interminable y las llamadas en espera con el seguro.</p>
+                </div>
+                
+                <div class="process-steps">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3>Envío Digital</h3>
+                        <p>Envíanos foto del reporte médico y formato de la aseguradora vía WhatsApp o app.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3>Auditoría y Armado</h3>
+                        <p>Validamos firmas, tabuladores y requisitos. Generamos la factura correspondiente.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3>Ingreso y Gestión</h3>
+                        <p>Radicamos ante el seguro y contestamos requerimientos médicos al momento.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <h3>Pago Directo</h3>
+                        <p>La aseguradora deposita directamente a tu cuenta y te enviamos la conciliación.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECCIÓN TESTIMONIOS ================= -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Médicos que recuperaron su tiempo</h2>
+                    <p>Únete a la red de especialistas que ya automatizaron sus ingresos.</p>
+                </div>
+                
+                <div class="testimonials">
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testimonial-text">"Antes perdía hasta 4 horas a la semana llamando a las aseguradoras para pelear facturas rechazadas. Con COBROMED mi flujo de caja aumentó un 30% en dos meses."</p>
+                        <div class="doc-info">
+                            <div class="doc-avatar">DR</div>
+                            <div class="doc-details">
+                                <h4>Dr. Roberto M.</h4>
+                                <p>Cirujano Traumatólogo</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testimonial-text">"El tablero interactivo de Monday es una maravilla. Desde el quirófano puedo revisar en mi celular qué cirugías ya me pagaron."</p>
+                        <div class="doc-info">
+                            <div class="doc-avatar">DRA</div>
+                            <div class="doc-details">
+                                <h4>Dra. Elena S.</h4>
+                                <p>Ginecoobstetra</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECCIÓN FAQ ================= -->
+        <section id="faq" class="section section-light">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Respuestas Claras a tus Dudas</h2>
+                    <p>Transparencia desde el día uno.</p>
+                </div>
+                
+                <div class="faq-wrapper">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            ¿Dónde depositan el dinero las aseguradoras?
+                            <i class="ph ph-plus faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p><strong>Exclusivamente a tu cuenta bancaria personal.</strong> COBROMED nunca toca tu dinero de honorarios médicos. Las aseguradoras te pagan directo a ti, nosotros solo cobramos nuestra comisión por el trámite exitoso mediante una factura independiente.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            ¿Qué pasa si una aseguradora rechaza el pago definitivo?
+                            <i class="ph ph-plus faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Nuestro modelo es cobrar a éxito. <strong>Si tú no cobras, nosotros no cobramos.</strong> Sin embargo, nuestro índice de aprobación es superior al 98%.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CTA FINAL ================= -->
+        <div class="container">
+            <section class="cta-section">
+                <h2>¿Listo para olvidarte de la burocracia?</h2>
+                <p>Agenda una llamada de 15 minutos. Analizamos el volumen de tus procedimientos y te hacemos una propuesta a la medida.</p>
+                <button class="btn btn-primary btn-lg">Agendar Sesión de Diagnóstico <i class="ph ph-calendar-check"></i></button>
+            </section>
+        </div>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <i class="ph-fill ph-check-circle logo-icon"></i>
+                        COBROMED
+                    </div>
+                    <p>La agencia de cobranza médica de nueva generación en México.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="ph ph-linkedin-logo"></i></a>
+                        <a href="#"><i class="ph ph-facebook-logo"></i></a>
+                        <a href="#"><i class="ph ph-instagram-logo"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <ul class="contact-info">
+                        <li><i class="ph ph-envelope-simple"></i> doctores@cobromed.mx</li>
+                        <li><i class="ph ph-whatsapp-logo"></i> +52 (55) 8765-4321</li>
+                        <li><i class="ph ph-map-pin"></i> CDMX, México</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 COBROMED. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Inicializar iconos de Lucide
-        lucide.createIcons();
-
-        // Efecto de scroll suave
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                // Obtenemos el ID destino
-                const targetId = this.getAttribute('href');
-                
-                // Si es un link vacío o solo '#', no hacemos nada
-                if (targetId === '#' || !targetId) return;
-
-                // Buscamos el elemento
-                const targetElement = document.querySelector(targetId);
-
-                // Solo hacemos scroll si el elemento existe
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                } else {
-                    console.warn(`Elemento con id ${targetId} no encontrado`);
-                }
+        // Acordeón FAQ
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
+                if (!isActive) faqItem.classList.add('active');
             });
         });
     </script>
-
-<script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
-<script src="https://files.bpcontent.cloud/2026/02/12/02/20260212021410-ODRP6HU4.js" defer></script>
-    
-
 </body>
 </html>
-
-
